@@ -1,0 +1,416 @@
+GDScript
+
+
+
+Every video game is a computer program.
+Programming is the process of writing precise instructions that tell a computer how to perform a task. A game's instructions are, for example: moving a character, drawing a life bar, or playing a sound.
+
+
+Calling functions
+
+
+A function definition starts with the func keyword followed by a space, the function's name, parentheses, and a colon:
+
+func name():
+	instruction1
+	instruction2
+
+In GDScript, for function names we use underscores ("_") instead of spaces. Furthermore, we can't start with numbers.
+To call a function, you write its exact name followed by an open and closed parenthesis. To call the function named "show", you would write show().
+In Godot, calling show() makes something visible, like a character or item. The complementary hide() function hides the entity.
+Once an entity is visible, calling show() again doesn't have any effect.
+Similarly, once you hide something, calling hide() again doesn't change anything.
+
+Creating a new function is necessary to execute instructions in GDScript.
+
+To define a function, you need to write the func keyword, the function's name, parentheses, and a colon: func run(): defines a function named run().
+
+Each instruction starts with a leading Tab character. The computer uses that to know which lines are part of the function. Also, we use parentheses to call functions because you can give the function arguments inside the parentheses when calling it. For example:
+
+func run():
+	rotate(0.3)
+
+Arguments are values (numbers, bits of text, and more) that change how the function behaves.
+Arguments let you fine-tune the effect of the function call. They can be optional at times, but functions often require arguments in order to work.
+For example, calling rotate() without any argument would result in an error. Without an argument, Godot doesn't know by how much you intend to rotate the sprite.
+
+Another example: With the move_local_x() function, you can move the character to its left and right. The function takes one argument: a number of pixels to offset the entity.
+- move_forward(pixels) makes move forward over a given distance in pixels.
+- turn_right(degrees) makes turn clockwise by a precise amount of degrees.
+- turn_left(degrees) works the same as turn_right(degrees), except that turns counter-clockwise.
+
+Functions are sequences of instructions we give a name. We call that name an identifier.
+Identifiers are unique: you cannot reuse the same name in a given space in your code.
+
+Just like rotate(), we can also give our functions parameters.
+Parameters act as placeholders in the function's code. They work like blank spaces that get filled in each time someone calls your function.
+For now, focus on the first line, the function definition: func rotate(radians).
+The word radians is the function's parameter. It's the placeholder that gets "replaced" with the actual value when you call the function.
+When you call this function with rotate(0.5), the computer replaces the name "radians" in the function with 0.5.
+
+Functions can have multiple parameters:
+A function can have multiple parameters. You can use as many placeholders as you need.
+To add multiple parameters, write a comma between each placeholder name.
+For example, func move(x, y) has two placeholders: x and y. Each one gets replaced with its own value when you call the function.
+
+
+
+
+Variables
+
+Variables are labels you use to keep track of values that vary over time.
+var health = 100
+The line above defines a new variable named health and assigns it a starting value of 100.
+
+Member variables are values attached to a game entity. They're useful properties like the position, rotation, and scale of a character.
+
+Note that in games, assuming your character's position starts at (0, 0), the code below moves the entity 200 pixels to the right and 250 pixels down:
+
+func run():
+	position.x = 200
+	position.y = 250
+
+To access those X and Y sub-components, you add a dot (".") after the variable name.
+
+In math, the y-axis is generally positive going up by convention. The convention is the opposite in video games and many computer applications: the y-axis is positive going down.
+This is due to computer and TV displays history: they would calculate and display pixels starting from the top left corner and moving towards the bottom right corner.
+
+Variables are case-sensitive, which means health and Health are technically different variables. Be careful to use the same capitalization wherever you refer to the same variable, or you could be reading or writing to a different variable.
+After defining your variable, you can access its value by writing the variable's name:
+
+func run():
+	var health = 100
+	health = heakth - 10
+	print(health)
+
+Here, the verb print means "to send information to display on the screen."
+The function "prints" things on your computer display; It does not relate to printers.
+
+We can create a function to represent damage or to heal
+
+func take_damage(amount):
+	health -= amount
+
+func heal(amount):
+	health -= amount
+
+The _process() function gets its name because it does calculations or continuous actions. It won't do anything until we add something to it. 
+Dozens of times per second, Godot runs every _process() function in the game to update the game world. After that, it displays an image of the game world on the screen. We call that image a frame.
+If the function exists in your code, and it is called precisely _process, then Godot will automatically run it every frame many times every second.
+Other game engines might use different names like _update().
+
+The _process() function takes only one parameter: delta
+
+func _process(delta):
+	rotate(0.05) #rotate 0.05 radians
+
+You may have heard of frames per second, or FPS for short. Games often run at 60 frames per second. It means that everything in the game updates 60 times each second. The number varies while playing, depending on the game and the device it runs on.
+On powerful computers, you may get frame rates in the hundreds or thousands of frames per second.
+
+Delta represents a time difference. It's the time it took Godot to complete the previous frame, in seconds. If we ignore delta, movement speed will vary depending on the computer. Delta helps to make the game consistent for everyone.
+When multiplying by delta, you make motion time-dependent rather than frame-dependent:
+rotate(3 * delta)
+
+Because any function can use variables we define outside of them, we call these variables script-wide. We align the variable assignment by indenting to make it part of the function body. Make sure to create the variable before using it!
+We can also define variables inside of functions. If we define a variable inside of a function, only that function can use it.
+
+Variables are also great at grouping values that control how a character behaves.
+Grouping them in this way allows us to easily change them. For example:
+
+var horizontal_speed = 200
+var jump_strength = 150
+var gravity = 90
+
+
+
+
+
+Conditions
+
+We can use conditions to run actions selectively.
+Conditions make your code branch into two paths: if the condition is met, the computer will run the corresponding instructions. Otherwise, those instructions will not run at all.
+When the computer checks a condition, this is called to evaluate a condition. All conditions evaluate to either true or false.
+
+To define a condition, we use the if keyword. We write a line starting with if, type the condition to evaluate, and end the line with a colon.
+
+func health(amount):
+	health += amount
+	if health > amount:
+		health = 100
+
+We've seen how function definitions use a colon at the end of the first line and nest content inside.
+In GDScript, this syntax is a recurring pattern for all code blocks. The computer knows which instructions belong to the condition because they are indented.
+
+The if keyword comes with a complementary else keyword. You can write an else block after an if block, like so. The else block will run whenever the condition above it isn't met. For example:
+
+func run():
+	var speed = 120
+	if speed > 100:
+		print("You're slow!")
+	else:
+		print("You're fast!")
+
+
+
+
+While Loops
+
+A while loop make the computer repeat a block of code until you meet a specific condition or decide to break from the loop. For example:
+
+func run():
+	var number = 0
+	while number < 4:
+		print(number)
+		number += 1
+
+We use the variable number to keep track of how many loops the while loop completes.
+Each time we go through the while loop, we add 1 to number.
+The while loop keeps running for as long as the condition is true. In this case, it keeps running while number is less than 4.
+
+We use while loops every time we need to loop an unknown number of times.
+For example, games run in a loop that typically generates sixty images per second until the user closes the game. This is possible thanks to while loops.
+
+There are other good uses for while loops:
+- Reading and processing a file, like a text document, line by line.
+- Processing a constant stream of data, like someone recording audio with a microphone.
+- Reading code and converting it into instructions the computer understands.
+- Various intermediate to advanced-level algorithms, like finding paths around a map for AI.
+
+
+
+
+
+For Loops
+
+Unlike while loops, for loops don't run forever, so you're much less likely to get infinite loop bugs in your game.
+
+func run():
+for number in range(3):
+	print(number)
+
+Godot has the helper function range(). Calling range(n) creates a list of numbers from 0 to n - 1.
+So calling range(3) outputs the list of numbers [0, 1, 2], and range(5) outputs [0, 1, 2, 3, 4].
+In the above example, for each item in the list [0, 1, 2], Godot sets number to the item, then executes the code in the for loop.
+
+A list of values, numbers or otherwise, has a precise name in code: we call it an array. So we can say calling the range() function produces an array of numbers. We could directly write and use that array inside our for loop instead of the range() function.
+Notice that when we create a for loop, we also create a local variable to which the loop assigns one value per iteration. Above, we named it number because the array we loop over contains three numbers (0, 1, and 2). But we could name it anything we'd like.
+
+We write arrays this way in GDScript:
+
+[value_1, value_2, ...]
+
+Here are a couple of valid arrays. Notice how you can mix values, and how they don't need to follow one another:
+
+var  numbers = [1, 2, 6, 7]
+var vectors_and_numbers = [Vector2(0, 0), Vector2(4, 3), 5, -1]
+
+Because arrays themselves are a value type, just like numbers or Vector2, we can assign arrays to variables to reaccess them later.
+In computer programming, we use arrays all the time. Precisely, you'll use them whenever you need to store a list of things. You always need lists of things in games:
+- The player's party in an RPG.
+- The items in the player's inventory.
+- The high scores in an arcade game.
+- The objects in the game world.
+All of those and many more rely on arrays.
+
+For each coordinate in an array named selected_units, we check if there is a unit in that cell. If so, we select it. In that case, we use an array, a loop, and a condition together.
+
+var units = []
+var selected_units = []
+
+func select_units(cells):
+	for cell in cells:
+		if cell in units:
+			selected_units.append(cell)
+	update()
+
+The code above uses several features:
+- In a condition, the "in" keyword allows you to check if a value exists in an array.
+- The array's "append()" function appends a new value at the end of the array.
+
+Notice the use of a period after the selected_units variable, to call the append() function. It's because this function exists only on arrays. When functions exist only on a specific value type, you write a dot after the value to call the function on it.
+
+When a customer purchases a meal, you want to append (add) it to the array. Then, as you complete a meal in the kitchen and serve it, you want to remove it from the array.
+You can use the append() function to add values at the end of an array. To remove values from the start, you can use the pop_front() function. We call it "pop" because the value jumps out of the array.
+Functions like append() and pop_front() only exist on arrays. To call them, we need to write the array name, then a dot, then the function: array_name.append().
+
+var waiting_orders = []
+var completed_orders = []
+
+func add_order(meal_name):
+	waiting_orders.append(meal_name)
+
+func complete_current_order():
+	var first_order = waiting_orders.pop_front()
+	completed_orders.append(first_order)
+
+
+Let's break down the code. We add orders to the waiting_orders array by appending them.
+We can use a string to represent a meal when calling the add_order() function.
+When completing an order, we remove it from the waiting_orders array by calling its pop_front() function. This function gives us the order back, which allows us to assign it to a temporary variable.
+We can then append the order to our completed_orders array. When we use an array this way, we call it a queue: the first element we add to the array is the first one we remove. It's like a waiting line at a store.
+
+To take a crate from the back of the array, this time, we use the pop_back() array function.
+This function removes (pops) the last value from the array and returns it to you.
+Here we pop the last value of the array and print what's left of the array to demonstrate how the array gets smaller.
+
+
+
+
+Comparisons
+
+We can compare numbers in this ways:
+> means "greater than"
+> means "greater than"
+< means "less than"
+== means "equal to"
+!= means "not equal to"
+
+For example:
+
+if health == 25:
+	pass
+
+The pass keyword prevents errors in our code when a line cannot be empty.
+For example, we must have a line of code after a function definition or an if block. When you don't know what to write yet, you can use the pass keyword as a placeholder, and Godot won't give any errors.
+
+
+
+
+
+
+2D Vectors
+
+The scale variable has two sub-variables to it: x and y. This is because scale is a Vector2, which stands for two-dimensional vector. A Vector2 represents 2D coordinates.
+
+In Godot, 2D vectors are a common value type named Vector2. Unlike plain numbers, they store two decimal numbers: one for the X coordinate and one for the Y coordinate.
+They allow you to represent a character's movement speed and direction, calculate the distance to a target, and more, with little code.
+
+The code Vector2(0.2, 0.2) constructs a new Vector2 value with its x set to 0.2 and its y set to 0.2, respectively.
+
+
+
+
+
+Strings
+
+Strings are instrumental in games and applications. We use them to display information such as the description of a spell or the name of a character.
+A String is a value type which holds text. To create a String, you write text wrapped in quotation marks (""). For example: "This is a text string."
+ Under the hood, strings are arrays of characters. In fact, we can use a for loop to loop through the characters of a String as we would with any other array.
+
+
+
+
+
+Built-in functions that return a value
+
+Many functions built into GDScript make calculations and return a new value.
+For example, in the following function, the round() function takes a decimal number as an argument and gives you back a new whole number rounded to the nearest digit:
+
+func run():
+	var number = round(3.4)
+	print(number)
+
+or
+set_text(round(health))
+
+If you need to use a returned value more than once, store it in a variable first. Otherwise, you can use the function call directly where you need it.
+
+
+
+
+
+
+
+lerp()
+
+func _process(delta):
+	position = lerp(
+		position, get_local_mouse_position(), 2 * delta
+	)
+
+The lerp() function (short for linear interpolate), blends between two values.
+It takes three arguments: a start value, an end value, and a blend amount between 0.0 and 1.0 that controls the blend. A value of 0.0 gives you the start value, 1.0 gives you the end value, and 0.5 gives you halfway between them.
+In games, lerp() is often used to make things move smoothly towards a target.
+
+Every frame, the code calculates a position somewhere between the turtle and the mouse cursor. The lerp() function takes care of everything.
+
+It's not the most robust approach for smooth movement, as you'll learn in the future, but it's a helpful function nonetheless.
+
+
+
+
+
+
+Writing a function that returns a value
+
+You can make your functions return values. To make a function return a value, you use the return keyword followed by the value in question.
+In previous lessons, we had characters walking on grids. For those practices, you were working with cell coordinates like Vector2(0, 0) or Vector2(2, 1).
+
+But cell coordinates are not the same as positions on the screen. A cell coordinate like Vector2(2, 1) tells us which cell we're in, but not where it is in pixels. To draw something on screen, we need pixel positions.
+We can write a function to convert cell coordinates to pixel positions. Hover over the cells below to see how it works.
+
+To convert cell coordinates to pixel positions, we multiply the cell coordinates by the size of each cell in pixels.
+
+For example, if each cell is 120 pixels wide and tall, then:
+- Cell Vector2(1, 0) is at pixel position Vector2(120, 0).
+- Cell Vector2(2, 1) would be at Vector2(240, 120) pixels.
+
+
+var cell size = Vector2(120, 120)
+
+func convert_to_world_coordinates(cell):
+	return cell * cell_size
+
+The return keyword sends the calculated value back to the code that called the function.
+
+
+There's a dedicated notation to access one element in an array by index. To do so, you use square brackets with a number inside the brackets:
+
+array_name[index]
+
+Index zero is the first element in the array.
+What if you want to access the last or second-before-last item in the inventory?
+In that case, you can use negative indices. If you write -1 in the brackets, you will get the last item in the array. You will get the second-to-last item if you write -2.
+
+There's a catch with this syntax: if you try to access an index that does not exist, you will get an error. You have to be careful always to access existing elements in the array.
+Arrays come with a member function named size(). You can call it on the array anytime to know its current size. The maximum index you can access in an array is array.size() - 1: it's the last item in the array.
+
+You can get the text representation of a value by calling the str() function (short for "string"). The function returns its argument as a new String.
+You can use this function whenever you want to turn some number or vector into text.
+You can also convert strings into whole numbers or decimal numbers using respectively the int() and float() functions.
+Those functions can convert what the player writes in a text field into a number. For example, the number of potions to sell at once in a shop.
+
+
+
+
+Dictionaries
+
+A dictionary is a data structure that allows you to map pairs of values. In the pair, we call the first value a key as we use it to access the second.
+In other words, a dictionary has a list of keys, and each key points to a value.
+To define a dictionary, we use curly brackets. A colon separates each key and its value. A comma separates each key and value pair.
+
+var dictionary = {
+	key1: value_1,
+	key2: value_2,
+	#...
+}
+
+Dictionaries can map about any value to any other value. For example, we can use the name of an item as a key and the amount as the corresponding value. This makes dictionaries excellent for keeping track of a player's inventory.
+
+var inventory = {
+	"healing heart": 3,
+	"gems": 5,
+	"sword": 1,
+}
+
+We access the value of keys by writing the dictionary name, with the key in between square brackets: dictionary[key]
+
+
+
+
+
+
+
+
+
+
