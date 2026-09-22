@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://crdp4a7tfwwpe"]
+
+[ext_resource type="Script" uid="uid://bvdpup3alqtcc" path="res://NPCBrain.gd" id="1_ll5ud"]
+[ext_resource type="Texture2D" uid="uid://cfeih4jg7kc3s" path="res://icon.svg" id="2_u1jv5"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jgy4n"]
+
+[node name="NPC" type="Node2D" unique_id=1904168147]
+script = ExtResource("1_ll5ud")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=977922717]
+texture = ExtResource("2_u1jv5")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=147698448]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1118393311]
+shape = SubResource("CircleShape2D_jgy4n")
+
+[node name="NPCBrain" type="Node" parent="." unique_id=1519588105]
+script = ExtResource("1_ll5ud")
+
+[node name="HTTPRequest" type="HTTPRequest" parent="NPCBrain" unique_id=1632118164]

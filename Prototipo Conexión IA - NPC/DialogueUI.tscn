@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://s7wdojhhn5dg"]
+
+[ext_resource type="Script" uid="uid://rqclnfxerge" path="res://dialogue_ui.gd" id="1_obd5m"]
+
+[node name="DialogueUI" type="Control" unique_id=1363041752]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_obd5m")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1588197156]
+
+[node name="Panel" type="Panel" parent="CanvasLayer" unique_id=1516902664]
+custom_minimum_size = Vector2(800, 100)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Panel" unique_id=2071217556]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DialogueText" type="RichTextLabel" parent="CanvasLayer/Panel/VBoxContainer" unique_id=1641169901]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Panel/VBoxContainer" unique_id=1905349347]
+layout_mode = 2
+
+[node name="PlayerInput" type="LineEdit" parent="CanvasLayer/Panel/VBoxContainer/HBoxContainer" unique_id=424722879]
+layout_mode = 2
+
+[node name="SendButton" type="Button" parent="CanvasLayer/Panel/VBoxContainer/HBoxContainer" unique_id=882523662]
+layout_mode = 2
